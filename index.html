@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=E, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excel-clone</title>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
+    <link rel="stylesheet" href="./css/perfect-scrollbar.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -84,53 +85,19 @@
             <div id="formula-input" contenteditable="true"></div>
         </div>
 
-        <div class="data-container">
-
+       <div class="data-container">
             <div id="select-all"></div>
             <div id="columns">
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-                <div class="column-name">A</div>
-                <div class="column-name">B</div>
-                <div class="column-name">C</div>
-
             </div>
-            <div id="cells"></div>
-            <div id="row"></div>
+            <div id="rows">
+            </div>
+            <div id="cells">
+            </div>
         </div>
         <div class="sheet-bar"></div>
     </div>
+    <script src="/dist/perfect-scrollbar.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
