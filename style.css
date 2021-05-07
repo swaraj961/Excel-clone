@@ -1,110 +1,99 @@
-body{
+body {
     margin: 0;
     overflow: hidden;
-    
 }
 
-*{
+* {
     box-sizing: border-box;
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: #fff;
     color: #444;
     height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: sans-serif;
 }
 
-.title{
+.title {
     background-color: #217346;
     text-align: center;
     font-size: 1rem;
-    padding: 1rem;
+    padding: 0.5rem;
     height: 5vh;
-    color: white;
-
+    color: #fff;
 }
 
-.menu-bar{
+.menu-bar {
     display: flex;
     flex-direction: row;
     height: 5vh;
     background-color: #217346;
-    
 }
 
-.menu-bar-item{
-    background-color:  #217346;
-    color: white;
-    padding-left: 0.5rem ;
-    padding-right:0.5rem;
+.menu-bar-item {
+    background-color: #217346;
+    color: #fff;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
     display: flex;
-    align-items: center;
     justify-content: center;
-
-
+    align-items: center;
 }
 
-.menu-bar-item.selected{
-    background-color:white;
-    color:#217346;
+.menu-bar-item.selected {
+    background-color: #fff;
+    color: #217346;
 }
 
-.menu-bar-item:hover{
-    background-color:#054221 ;
+.menu-bar-item:hover {
+    background-color: #195534;
     cursor: pointer;
 }
 
-.menu-bar-item.selected{
-    background-color: white;
+.menu-bar-item.selected:hover {
+    background-color: #fff;
     cursor: default;
 }
 
-
-.menu-icon-bar{
-
+.menu-icon-bar {
     display: flex;
     flex-direction: row;
     height: 6vh;
     align-items: center;
 }
 
-.menu-icon{
+.menu-icon {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
     display: flex;
-    padding-left: 0.5rem ;
-    padding-right:0.5rem;
-    /* padding-top: .5rem; */
+    justify-content: center;
     align-items: center;
     height: 100%;
-    justify-content: center;
-
 }
-.menu-icon:hover{
+
+.menu-icon:hover {
     background-color: lightgray;
     cursor: pointer;
 }
 
-
-.menu-selector{
+.menu-selector {
     height: 4.5vh;
-    font-size: 1rem;
-    margin-left:.5rem;
-    margin-right: .5rem;
-
-
+    font-size: 1.2rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
 }
 
-#font-family{
-    min-width: 130px;
+#font-family {
     width: 10vw;
+    min-width: 130px;
     font-family: Noto Sans;
 }
 
-#font-size{
+#font-size {
     width: 3.5vw;
-    min-width:55px;
+    min-width: 55px;
 }
 
 .formula-bar {
@@ -134,7 +123,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70%;    
+    height: 70%;
 }
 
 #formula-input {
@@ -153,7 +142,6 @@ body{
     height: 76vh;
     flex-direction: row;
     flex-wrap: wrap;
-    /* overflow: scroll; */
     width: 100vw;
 }
 
@@ -180,25 +168,22 @@ body{
 }
 
 #cells {
+    position: relative;
     width: calc(100vw - 25px);
     height: calc(76vh - 25px);
     border: 1px solid lightgray;
     overflow: scroll;
-    position: relative;
 }
 
 .column-name {
     min-width: 100px;
     width: 100px;
     border-right: 1px solid lightgray;
-    /* border-left: 1px solid lightgray; */
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 600;
 }
-
 
 .row-name {
     min-height: 25px;
@@ -221,4 +206,35 @@ body{
     height: 25px;
     border-bottom: 1px solid lightgray;
     border-right: 1px solid lightgray;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 14px;
+    font-family: Noto Sans;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    outline-color: #217346;
 }
+
+.input-cell.selected {
+    border: 2px solid #217346;
+}
+
+.input-cell.top-selected {
+    border-top: none;
+}
+
+.input-cell.bottom-selected {
+    border-bottom: 1px solid lightgray;
+}
+
+.input-cell.left-selected {
+    border-left: none;
+}
+
+.input-cell.right-selected {
+    border-right: 1px solid lightgray;
+}
+
+
