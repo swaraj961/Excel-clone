@@ -1,5 +1,7 @@
 const ps = new PerfectScrollbar("#cells", {
-    wheelSpeed: 15
+    wheelSpeed: 15,
+    wheelPropagation: true,
+    minScrollbarLength: 20
 });
 
 for (let i = 1; i <= 100; i++) {
@@ -58,6 +60,7 @@ function getTopLeftBottomRightCell(rowId,colId) {
     let rightCell = $(`#row-${rowId}-col-${colId + 1}`);
     return [topCell,bottomCell,leftCell,rightCell];
 }
+
 $(".input-cell").click(function(e) {
     let [rowId,colId] = getRowCol(this);
     let [topCell,bottomCell,leftCell,rightCell] = getTopLeftBottomRightCell(rowId,colId);
@@ -142,5 +145,46 @@ function selectCell(ele,e,topCell,bottomCell,leftCell,rightCell) {
         $(".input-cell.selected").removeClass("selected top-selected bottom-selected left-selected right-selected");
     }
     $(ele).addClass("selected");
+}
+let count=0;
+let startcellSelected=false;
+let startCell={};
+let endCell={};
+$(".input-cell").mousemove(function(e){
+    e.preventDefault();
+    if(e.buttons==1){
+        
+        if(!startcellSelected){
+
+            let[rowId, colId]= getRowCol(this);
+            startCell={rowId : rowId, colId: colId}
+            startcellSelected=true;
+           
+         } 
+        // console.log(startCell,endCell)
+
+    }else{
+        startcellSelected=false;
+    }
+  
+})
+
+$(".input-cell").mouseenter(function(e){
+    if(e.buttons==1){
+        let[rowId, colId]= getRowCol(this);
+        endCell={rowId : rowId, colId: colId}
+        selectAllBetweenCell(startCell,endCell);
+    }
+})
+
+function  selectAllBetweenCell(start, end){
+    console.log(count++);
+    $(".input-cell.selected").removeClass("selected top-selected bottom-selected left-selected right-selected");
+    for(let i = Math.min(start.rowId, end.rowId); i<=Math.max(start.rowId, end.rowId); i++){
+        for(let j = Math.min(start.colId, end.colId);  j<=Math.max(start.colId, end.colId); j++){
+            let [topCell,bottomCell,leftCell,rightCell] = getTopLeftBottomRightCell(i,j);
+            selectCell($(`#row-${i}-col-${j}`)[0],{"ctrlKey":true},topCell,bottomCell,leftCell,rightCell);
+        }
+    }
 }
 
