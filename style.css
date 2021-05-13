@@ -240,3 +240,11 @@ body {
 }
 
 
+.menu-icon.selected{
+    background-color: lightgray;
+   
+}
+
+.input-cell:hover{
+    cursor:cell
+}
