@@ -171,9 +171,24 @@ function changeHeader([rowId, colId]) {
     $(".alignment.selected").removeClass("selected");
     $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
     // console.log(data);
+
+    addRemoveSelectionFontStyle(data,"bold");
+    addRemoveSelectionFontStyle(data,"italic");
+    addRemoveSelectionFontStyle(data,"underlined");
+
+
+    
+   
    
 }
 
+function addRemoveSelectionFontStyle(data,property){
+    if(data[property]){
+        $(`#${property}`).addClass("selected");
+    }else{
+        $(`#${property}`).removeClass("selected");
+    }
+}
    
 
 
@@ -279,3 +294,50 @@ $(".alignment").click(function(e){
     })
 
 })
+
+$("#bold").click(function(e){
+
+   setStyle(this,"bold","font-weight","bold")
+
+    
+})
+
+$("#italic").click(function(e){
+
+    setStyle(this,"italic","font-style","italic")
+ 
+     
+ })
+
+ $("#underlined").click(function(e){
+
+    setStyle(this,"underlined","text-decoration","underline")
+ 
+     
+ })
+
+function setStyle(ele, property, key,value){
+
+    if($(ele).hasClass("selected")){
+
+        $(ele).removeClass("selected");
+        $(".input-cell.selected").css(key,"");
+        $(".input-cell.selected").each(function(index , data){
+    
+            let [rowId, colId]= getRowCol(data);
+            cellData[rowId-1][colId-1][property]=false;
+    
+        })
+    
+        }else{
+            $(ele).addClass("selected");
+            $(".input-cell.selected").css(key,value);
+            $(".input-cell.selected").each(function(index , data){
+    
+                let [rowId, colId]= getRowCol(data);
+                cellData[rowId-1][colId-1][property]=true;
+        
+            })
+        }
+    
+}
