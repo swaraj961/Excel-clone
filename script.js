@@ -508,6 +508,7 @@ function selectSheet() {
     emptyPrevSheet();
     selectedSheet = $(".sheet-tab.selected").text();
     loadCurrentSheet();
+    $(`#row-1-col-1`).click();
 
 
 }

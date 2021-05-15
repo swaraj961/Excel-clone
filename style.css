@@ -351,3 +351,17 @@ body {
      background-color: lightgray;
      cursor: default;
  }
+
+ .add-sheet:hover{
+     cursor: pointer;
+     transform: scale(1.2);
+ }
+
+ .scroller{
+     font-size: 27px;
+ }
+ .scroller:hover{
+     cursor: pointer;
+     background-color: lightgray;
+ }
+
