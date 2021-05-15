@@ -173,15 +173,15 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
 }
 
 function changeHeader([rowId, colId]) {
-
+    console.log(cellData);
     let data;
-    if( cellData[selectedSheet][rowId - 1] &&  cellData[selectedSheet][colId - 1]){
+    if( cellData[selectedSheet][rowId - 1] &&  cellData[selectedSheet][rowId - 1][colId - 1]){
         data = cellData[selectedSheet][rowId - 1][colId - 1];
 
     }else{
         data= defaultProperties;
     }
-    // console.log(cellData);
+    
     $(".alignment.selected").removeClass("selected");
     $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
     // console.log(data);
@@ -450,7 +450,9 @@ function updateCellData(property,value) {
             if (cellData[selectedSheet][rowId - 1][colId - 1] != undefined) {
                 cellData[selectedSheet][rowId - 1][colId - 1][property] = value;
                 if (JSON.stringify(cellData[selectedSheet][rowId - 1][colId - 1]) == JSON.stringify(defaultProperties)) {
-                    delete cellData[selectedSheet][rowId - 1][colId - 1];
+                   if(Object.keys( delete cellData[selectedSheet][rowId - 1]).length==0){
+                    delete cellData[selectedSheet][rowId - 1];
+                   }
                 }
             }
         });
