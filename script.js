@@ -26,6 +26,7 @@ let cellData = {
 
 let selectedSheet = "Sheet1";
 let toltalSheets = 1;
+let lastlyAddedSheet = 1;
 
 let defaultProperties = {
     "font-family": "Noto Sans",
@@ -173,15 +174,15 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
 }
 
 function changeHeader([rowId, colId]) {
-    console.log(cellData);
+    // console.log(cellData);
     let data;
-    if( cellData[selectedSheet][rowId - 1] &&  cellData[selectedSheet][rowId - 1][colId - 1]){
+    if (cellData[selectedSheet][rowId - 1] && cellData[selectedSheet][rowId - 1][colId - 1]) {
         data = cellData[selectedSheet][rowId - 1][colId - 1];
 
-    }else{
-        data= defaultProperties;
+    } else {
+        data = defaultProperties;
     }
-    
+
     $(".alignment.selected").removeClass("selected");
     $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
     // console.log(data);
@@ -305,7 +306,7 @@ $(".alignment").click(function (e) {
     $(".alignment.selected").removeClass("selected");
     $(this).addClass("selected");
     $(".input-cell.selected").css("text-align", alignment);
-    updateCellData("alignment",alignment);
+    updateCellData("alignment", alignment);
 });
 
 $("#bold").click(function (e) {
@@ -341,7 +342,7 @@ function setStyle(ele, property, key, value) {
         //     cellData[rowId - 1][colId - 1][property] = false;
 
         // })
-        updateCellData(property,false);
+        updateCellData(property, false);
 
     } else {
         $(ele).addClass("selected");
@@ -352,7 +353,7 @@ function setStyle(ele, property, key, value) {
         //     cellData[rowId - 1][colId - 1][property] = true;
 
         // })
-        updateCellData(property,true);
+        updateCellData(property, true);
     }
 
 }
@@ -373,7 +374,7 @@ $(".pick-color").colorPick({
                 //     cellData[rowId - 1][colId - 1].bgcolor = this.color;
                 // });
 
-                updateCellData("bgcolor",this.color)    ;
+                updateCellData("bgcolor", this.color);
             }
             if ($(this.element.children()[1]).attr("id") == "text-color") {
                 $(".input-cell.selected").css("color", this.color);
@@ -384,7 +385,7 @@ $(".pick-color").colorPick({
                 //     cellData[rowId - 1, colId - 1].color = this.color;
 
                 // })
-                updateCellData("color",this.color) ;   
+                updateCellData("color", this.color);
 
             }
 
@@ -422,11 +423,11 @@ $(".menu-selector").change(function (e) {
     //     let [rowId, colId] = getRowCol(data);
     //     cellData[rowId - 1][colId - 1][key] = value;
     // })
-    updateCellData(key,value);
+    updateCellData(key, value);
 })
 
 
-function updateCellData(property,value) {
+function updateCellData(property, value) {
     if (value != defaultProperties[property]) {
         $(".input-cell.selected").each(function (index, data) {
             let [rowId, colId] = getRowCol(data);
@@ -450,11 +451,134 @@ function updateCellData(property,value) {
             if (cellData[selectedSheet][rowId - 1][colId - 1] != undefined) {
                 cellData[selectedSheet][rowId - 1][colId - 1][property] = value;
                 if (JSON.stringify(cellData[selectedSheet][rowId - 1][colId - 1]) == JSON.stringify(defaultProperties)) {
-                   if(Object.keys( delete cellData[selectedSheet][rowId - 1]).length==0){
-                    delete cellData[selectedSheet][rowId - 1];
-                   }
+                    if (Object.keys(delete cellData[selectedSheet][rowId - 1]).length == 0) {
+                        delete cellData[selectedSheet][rowId - 1];
+                    }
                 }
             }
         });
     }
 }
+
+
+function addSheetEvents(){
+    
+  
+    $(".sheet-tab").on("contextmenu", function (e) {
+        e.preventDefault();
+    
+        $(".sheet-options-modal").remove();
+    
+        let modal = $(` <div class="sheet-options-modal">
+        <div class="option sheet-rename">Rename</div>
+        <div class="option sheet-delete">Delete</div> 
+        </div>`);
+    
+        modal.css({ "left": e.pageX });
+    
+        $(".container").append(modal);
+    
+    })
+
+    $(".sheet-tab").click(function (e) {
+        $(".sheet-tab.selected").removeClass("selected");
+        $(this).addClass("selected");
+        selectSheet();
+    })
+    
+    
+    }
+
+    addSheetEvents();
+
+
+$(".add-sheet").click(function (e) {
+    lastlyAddedSheet++;
+    toltalSheets++;
+    cellData[`Sheet${lastlyAddedSheet}`]= {};
+    $(".sheet-tab.selected").removeClass("selected");
+    let sheet = $(` <div class="sheet-tab selected ">Sheet${lastlyAddedSheet}</div>`);
+    $(".sheet-tab-container").append(sheet);
+    selectSheet();
+    addSheetEvents();
+})
+
+
+function selectSheet() {
+    emptyPrevSheet();
+    selectedSheet = $(".sheet-tab.selected").text();
+    loadCurrentSheet();
+
+
+}
+
+
+
+
+
+function emptyPrevSheet() {
+    let data = cellData[selectedSheet];
+    let rowKeys = Object.keys(data);
+
+    for (let i of rowKeys) { // row traversal
+        //  console.log(rowKeys);
+
+        let colKeys = Object.keys(data[i]);
+        // console.log(colKeys);
+
+        for (let j of colKeys) { //col traversal
+
+            let rowid = parseInt(i);
+            let colid = parseInt(j);
+            let cell = $(`#row-${rowid + 1}-col-${colid + 1}`);
+            cell.text("");
+            cell.css({
+                "font-family": "Noto Sans",
+                "font-weight": "",
+                "font-size": 14,
+                "font-style": "",
+                "text-decoration": "",
+                "color": "#444",
+                "background-color": "#fff",
+                "text-align": "left",
+            });
+
+        }
+
+    }
+
+}
+
+function loadCurrentSheet() {
+
+    let data = cellData[selectedSheet];
+    let rowKeys = Object.keys(data);
+
+    for (let i of rowKeys) { // row traversal
+        //  console.log(rowKeys);
+
+        let colKeys = Object.keys(data[i]);
+        // console.log(colKeys);
+
+        for (let j of colKeys) { //col traversal
+
+            let rowid = parseInt(i);
+            let colid = parseInt(j);
+            let cell = $(`#row-${rowid + 1}-col-${colid + 1}`);
+            cell.text(data[rowid][colid].text);
+            cell.css({
+                "font-family": data[rowid][colid]["font-family"],
+                "font-weight": data[rowid][colid].bold ? bold : "",
+                "font-size": data[rowid][colid]["font-size"],
+                "font-style": data[rowid][colid].italic ? italic : "",
+                "text-decoration": data[rowid][colid].underlined ? underlined : "",
+                "color": data[rowid][colid]["color"],
+                "background-color": data[rowid][colid]["bgcolor"],
+                "text-align": data[rowid][colid].alignment
+            });
+
+        }
+    }
+
+}
+
