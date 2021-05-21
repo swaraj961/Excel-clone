@@ -733,7 +733,7 @@ function saveFile() {
     $(".yes-button").click(function(e) {
         $(".title").text($(".sheet-modal-input").val());
         let a = document.createElement("a");
-        a.href = `data:application/json,${JSON.stringify(cellData)}`;
+        a.href = `data:application/json,${encodeURIComponent(JSON.stringify(cellData))}`;
         a.download = $(".title").text() + ".json";
         $(".container").append(a);
         a.click();
