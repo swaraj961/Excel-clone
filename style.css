@@ -457,3 +457,64 @@ body {
     font-size: 13px;
     margin-top: 5px;
 }
+
+.file-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 0vw;
+    display: flex;
+}
+
+.file-options-modal {
+    width: 12rem;
+    background-color: #217346;
+    height: 100%;
+    color: #fff;
+}
+
+.file-recent-modal {
+    background-color: #fff;
+    height: 100%;
+    width:  calc(50% - 12rem);
+}
+
+
+.close,.new, .open, .save {
+    display: flex;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width: 100%;
+    font-size: 16px;
+    justify-content: center;
+    font-weight: 100;
+    position: relative;
+    
+}
+
+.close-icon,.new-icon, .open-icon, .save-icon {
+    
+    position: absolute;
+    left: 2rem;
+}
+
+.close {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.close-icon {
+    transform: rotate(90deg);
+}
+
+.close:hover, .new:hover, .open:hover, .save:hover {
+    background-color: #1e663f;
+    cursor: pointer;
+}
+
+.file-transparent {
+    width: 50%;
+    height: 100vh;
+}
