@@ -744,3 +744,16 @@ function updateAndDeleteSheet() {
     currSelectedSheet.remove();
     totalSheets--;
 }
+
+
+$(".left-scroller,.right-scroller").click(function(e){
+    let keysArray = Object.keys(cellData);
+    let selectedSheetIndex = keysArray.indexOf(selectedSheet);
+    if(selectedSheetIndex != 0 && $(this).text() == "arrow_left") {
+        selectSheet($(".sheet-tab.selected").prev()[0]);
+    } else if(selectedSheetIndex != (keysArray.length - 1) && $(this).text() == "arrow_right") {
+        selectSheet($(".sheet-tab.selected").next()[0]);
+    }
+
+    $(".sheet-tab.selected")[0].scrollIntoView();
+});
