@@ -684,7 +684,7 @@ $("#menu-file").click(function (e) {
                                             </div>
                                         </div>
                                     </div>`);
-          
+
             $(".no-button").click(function (e) {
                 $(".sheet-modal-parent").remove();
                 newFile();
@@ -698,15 +698,15 @@ $("#menu-file").click(function (e) {
         }
     });
 
-    $(".save").click(function(e){
+    $(".save").click(function (e) {
         saveFile();
     });
 
-    $(".open").click(function(e){
+    $(".open").click(function (e) {
 
         openFile();
-        
-        })
+
+    })
 
 
 });
@@ -742,7 +742,7 @@ function saveFile(newclicked) {
                                     </div>
                                 </div>
                             </div>`);
-    $(".yes-button").click(function(e) {
+    $(".yes-button").click(function (e) {
         $(".title").text($(".sheet-modal-input").val());
         let a = document.createElement("a");
         a.href = `data:application/json,${encodeURIComponent(JSON.stringify(cellData))}`;
@@ -755,7 +755,7 @@ function saveFile(newclicked) {
     $(".no-button,.yes-button").click(function (e) {
         $(".sheet-modal-parent").remove();
 
-        if(newclicked){
+        if (newclicked) {
             newFile();
         }
     });
@@ -767,8 +767,8 @@ function openFile() {
     let inputFile = $(`<input accept="application/json" type="file" />`);
     $(".container").append(inputFile);
     inputFile.click();
-    inputFile.change(function(e) {
-        console.log(inputFile.val());
+    inputFile.change(function (e) {
+        // console.log(inputFile.val());
         let file = e.target.files[0];
         $(".title").text(file.name.split(".json")[0]);
         let reader = new FileReader();
@@ -779,10 +779,10 @@ function openFile() {
             cellData = JSON.parse(reader.result);
             let sheets = Object.keys(cellData);
             lastlyAddedSheet = 1;
-            for(let i of sheets) {
-                if(i.includes("Sheet")) {
+            for (let i of sheets) {
+                if (i.includes("Sheet")) {
                     let splittedSheetArray = i.split("Sheet");
-                    if(splittedSheetArray.length == 2 && !isNaN(splittedSheetArray[1])) {
+                    if (splittedSheetArray.length == 2 && !isNaN(splittedSheetArray[1])) {
                         lastlyAddedSheet = parseInt(splittedSheetArray[1]);
                     }
                 }
@@ -798,3 +798,52 @@ function openFile() {
         }
     });
 }
+
+
+let clipboard = { startCell: [], cellData: {} };
+
+$("#copy").click(function (e) {
+
+    let [rowId, colId] = getRowCol($(".input-cell.selected")[0]);
+    clipboard.startCell = [rowId, colId];
+
+    // changes in cell = traverse
+
+    $(".input-cell.selected").each(function (index, data) {
+
+        let [rowId, colId] = getRowCol(data);
+
+        if (cellData[selectedSheet][rowId - 1] && (cellData[selectedSheet][rowId - 1][colId - 1])) {
+
+            if (!clipboard.cellData[rowId]) {
+                clipboard.cellData[rowId] = {};
+
+            }
+
+            clipboard.cellData[rowId][colId] = { ...cellData[selectedSheet][rowId - 1][colId - 1] };
+
+
+        }
+
+    });
+
+    // console.log(cellData);
+
+})
+
+$("#paste").click(function(e) {
+    let startCell = getRowCol($(".input-cell.selected")[0]);
+    let rows = Object.keys(clipboard.cellData);
+    for(let i of rows) {
+        let cols = Object.keys(clipboard.cellData[i]);
+        for(let j of cols) {
+            let rowDistance = parseInt(i) - parseInt(clipboard.startCell[0]);
+            let colDistance = parseInt(j) - parseInt(clipboard.startCell[1]);
+            if(!cellData[selectedSheet][startCell[0] + rowDistance - 1]) {
+                cellData[selectedSheet][startCell[0] + rowDistance - 1] = {};
+            }
+            cellData[selectedSheet][startCell[0] + rowDistance - 1][startCell[1] + colDistance - 1] = {...clipboard.cellData[i][j]};
+        }
+    }
+    loadCurrentSheet();
+})
