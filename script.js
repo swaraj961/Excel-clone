@@ -684,14 +684,16 @@ $("#menu-file").click(function (e) {
                                             </div>
                                         </div>
                                     </div>`);
-            $(".yes-button").click(function (e) {
-                // save function
-
-                saveFile();
-            });
-            $(".no-button,.yes-button").click(function (e) {
+          
+            $(".no-button").click(function (e) {
                 $(".sheet-modal-parent").remove();
                 newFile();
+            });
+
+            $(".yes-button").click(function (e) {
+                // save function
+                $(".sheet-modal-parent").remove();
+                saveFile(true);
             });
         }
     });
@@ -716,7 +718,7 @@ function newFile() {
     $("#row-1-col-1").click();
 }
 
-function saveFile() {
+function saveFile(newclicked) {
     $(".container").append(`<div class="sheet-modal-parent">
                                 <div class="sheet-rename-modal">
                                     <div class="sheet-modal-title">Save File</div>
@@ -742,5 +744,9 @@ function saveFile() {
     });
     $(".no-button,.yes-button").click(function (e) {
         $(".sheet-modal-parent").remove();
+
+        if(newclicked){
+            newFile();
+        }
     });
 }
