@@ -1,11 +1,5 @@
 # Excel-clone
-Excel-Clone using - JQuery ,HTML,CSS
-
-# Language used:
-HTML, CSS, javascript
-
-# library
- jquery
+Excel-Clone using - JQuery ,HTML,CSS, javascript
 
 ## Demo :
  
